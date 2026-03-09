@@ -35,7 +35,6 @@ from dataclasses import dataclass, field
 from enum import Enum
 
 
-
 class RiskLevel(Enum):
     """Risk classification levels aligned with enterprise risk management."""
     NONE = "none"
