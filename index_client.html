@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDV-Schule GPT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="index.js" defer></script>
+</head>
+
+<body class="bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen font-sans antialiased">
+
+    <div class="max-w-2xl mx-auto px-6 py-12">
+        
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl shadow-lg mb-4">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                </svg>
+            </div>
+            <h1 class="text-3xl font-semibold text-gray-900 tracking-tight">EDV-Schule GPT</h1>
+            <p class="text-gray-500 mt-2">Stellen Sie Ihre Frage und erhalten Sie eine Antwort</p>
+        </div>
+
+        <!-- Chat Container -->
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-200/50">
+            
+            <!-- Form -->
+            <form id="chat-form" class="p-6 border-b border-gray-100">
+                <div class="flex gap-3">
+                    <input 
+                        type="text" 
+                        id="user-input"
+                        class="flex-1 bg-gray-100 border-0 rounded-xl px-5 py-3.5 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200"
+                        placeholder="Geben Sie Ihre Frage ein..." 
+                        required
+                        minlength="5" 
+                        maxlength="200"
+                    >
+                    <button 
+                        type="submit"
+                        class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium px-6 py-3.5 rounded-xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center gap-2"
+                    >
+                        <span>Senden</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Response Area -->
+            <div id="response-container" class="p-6">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <h2 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Antwort</h2>
+                </div>
+                <div class="bg-gray-50 rounded-2xl p-5 min-h-[120px]">
+                    <pre id="response-output" class="text-gray-800 whitespace-pre-wrap font-sans text-base leading-relaxed"></pre>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <p class="text-center text-gray-400 text-sm mt-8">
+            Powered by OpenRouter AI
+        </p>
+
+    </div>
+
+</body>
+
+</html>
