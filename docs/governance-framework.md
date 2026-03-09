@@ -1,181 +1,116 @@
-# LLM Security Governance Framework
+# AI Risk Governance Framework for LLM Deployments
 
-## Purpose
+> *"Governance matters most. Technical controls are necessary but insufficient — organizations need systematic, auditable processes to manage AI risk."*
 
-This framework provides organisations with a structured approach to governing
-the security of Large Language Model (LLM) deployments.  It defines roles and
-responsibilities, risk management processes, operational controls, and
-monitoring requirements to ensure that LLM systems operate safely, ethically,
-and in compliance with applicable regulations.
+## 1. Purpose
 
----
+This framework provides a structured approach for enterprise Information Security Officers (*Sicherheitsbeauftragte*) to govern the risks associated with deploying Large Language Models. It is aligned with:
 
-## 1. Governance Principles
+- **OWASP Top 10 for LLM Applications (2025)**
+- **EU AI Act** (Regulation (EU) 2024/1689)
+- **NIS2 Directive** (as transposed into German law via BSIG amendments, effective December 2025)
+- **GDPR** (Regulation (EU) 2016/679)
+- **ISO 27001:2022** — Information Security Management Systems
+- **NIST AI RMF** — AI Risk Management Framework
 
-| Principle | Description |
-|-----------|-------------|
-| **Risk-proportionate controls** | Security controls are calibrated to the sensitivity of the data processed and the impact of potential failures. |
-| **Transparency** | Stakeholders understand how LLMs are used, what data they process, and what decisions they influence. |
-| **Accountability** | Clear ownership of LLM systems with named responsible parties for security, ethics, and compliance. |
-| **Privacy by design** | Personal data is minimised, protected, and handled lawfully throughout the LLM lifecycle. |
-| **Continuous improvement** | Security posture is reviewed regularly and updated in response to emerging threats and incidents. |
+## 2. AI Risk Assessment Methodology
 
----
+### 2.1 Risk Identification
 
-## 2. Roles and Responsibilities
+Every LLM deployment must undergo a structured risk identification process:
 
-### 2.1 AI Security Officer (AISO)
+| Risk Domain | Key Questions |
+|:---|:---|
+| **Data Exposure** | What data does the LLM have access to? Can it be exfiltrated via prompt injection? |
+| **Output Integrity** | Can the LLM produce harmful, misleading, or policy-violating outputs? |
+| **Access Control** | Who can interact with the LLM? Are there role-based restrictions? |
+| **Tool Integration** | Does the LLM trigger actions (API calls, code execution, database queries)? |
+| **Supply Chain** | Are third-party models, plugins, or datasets used? Are they vetted? |
+| **Compliance** | Does the use case fall under high-risk AI (EU AI Act Annex III)? |
 
-- Owns the organisation's AI security policy and this governance framework.
-- Chairs the AI Security Review Board.
-- Approves deployment of high-risk LLM applications.
-- Reports on AI security posture to executive leadership.
+### 2.2 Risk Classification Matrix
 
-### 2.2 AI Security Review Board
+| Likelihood \ Impact | Low | Medium | High | Critical |
+|:---|:---|:---|:---|:---|
+| **Very Likely** | Medium | High | Critical | Critical |
+| **Likely** | Low | Medium | High | Critical |
+| **Possible** | Low | Medium | Medium | High |
+| **Unlikely** | Low | Low | Medium | Medium |
 
-- Reviews new LLM use cases and material changes to existing deployments.
-- Approves risk acceptance for residual risks above defined tolerance thresholds.
-- Meets at minimum quarterly; convenes ad hoc for critical incidents.
+### 2.3 Risk Treatment Options
 
-### 2.3 Engineering Teams
+1. **Mitigate** — Implement controls to reduce likelihood or impact
+2. **Transfer** — Shift risk via insurance or contractual arrangements
+3. **Accept** — Document the residual risk with management sign-off
+4. **Avoid** — Do not proceed with the deployment
 
-- Implement security controls in accordance with this framework.
-- Conduct pre-deployment security assessments.
-- Participate in red-team exercises.
-- Remediate identified vulnerabilities within agreed SLAs.
+## 3. Mitigation Controls
 
-### 2.4 Legal and Compliance
+### 3.1 Technical Controls
 
-- Advise on regulatory obligations (GDPR, EU AI Act, CCPA, sector-specific requirements).
-- Review data processing agreements with LLM providers.
-- Maintain records of processing activities involving LLM systems.
+| Control ID | Control | OWASP Mapping | Priority |
+|:---|:---|:---|:---|
+| TC-01 | Input validation and prompt injection detection | LLM01 | Critical |
+| TC-02 | Output filtering and content safety classifiers | LLM05 | High |
+| TC-03 | System prompt hardening and canary tokens | LLM07 | High |
+| TC-04 | Rate limiting and anomaly detection | LLM10 | Medium |
+| TC-05 | Sandboxed execution for tool integrations | LLM06 | Critical |
+| TC-06 | Data loss prevention (DLP) on LLM I/O | LLM02 | Critical |
+| TC-07 | Model supply chain verification & integrity checks | LLM03 | High |
+| TC-08 | RAG pipeline input sanitization | LLM01, LLM08 | High |
 
-### 2.5 Data Protection Officer (DPO) – where applicable
+### 3.2 Organizational Controls
 
-- Oversees data protection impact assessments (DPIAs) for high-risk LLM processing.
-- Handles data subject requests related to LLM outputs.
+| Control ID | Control | Regulatory Basis | Priority |
+|:---|:---|:---|:---|
+| OC-01 | Establish an AI Governance Committee | EU AI Act Art. 9, NIS2 | Critical |
+| OC-02 | Define an AI-specific Acceptable Use Policy | GDPR Art. 5, ISO 27001 A.5.10 | Critical |
+| OC-03 | Mandatory AI security training for all employees | EU AI Act Art. 4, NIS2 §38 BSIG | High |
+| OC-04 | Regular red-team exercises against LLM deployments | OWASP LLM01–LLM10 | High |
+| OC-05 | Vendor risk assessment for third-party AI services | NIS2, EU AI Act Art. 28 | High |
+| OC-06 | Data Protection Impact Assessment (DPIA) for LLMs | GDPR Art. 35 | Critical |
+| OC-07 | Executive accountability and sign-off for AI risk | NIS2 §38 BSIG (Geschäftsleitung) | Critical |
 
----
+### 3.3 Monitoring & Incident Response
 
-## 3. LLM Risk Classification
+| Control ID | Control | Requirement |
+|:---|:---|:---|
+| MR-01 | Continuous logging of all LLM inputs and outputs | Retain for minimum audit period |
+| MR-02 | Real-time alerting on jailbreak detection triggers | < 5 minute response SLA |
+| MR-03 | AI-specific incident response playbook | Must address prompt injection, data leak, and model compromise scenarios |
+| MR-04 | Incident reporting to BSI (NIS2) | Initial notification within 24h, detail within 72h, final report within 30 days |
+| MR-05 | Quarterly AI risk review and control effectiveness audit | Document findings and remediation actions |
+| MR-06 | Post-incident lessons learned and control updates | Mandatory after every AI-related security incident |
 
-All LLM applications must be classified before deployment:
+## 4. Roles & Responsibilities
 
-| Risk Level | Criteria | Required Controls |
-|------------|----------|-------------------|
-| **Critical** | Processes highly sensitive PII or financial data; makes autonomous consequential decisions; public-facing without human oversight | Full DPIA, AISO approval, penetration test, real-time monitoring, human-in-the-loop for consequential actions |
-| **High** | Processes sensitive internal data; provides advice that influences significant decisions | Security assessment, red-team exercise, output validation, logging |
-| **Medium** | Internal productivity tools; limited data access; human reviews all outputs | Standard security review, basic logging, periodic audit |
-| **Low** | Sandboxed experimentation; no sensitive data; outputs are informational only | Self-assessment, developer review |
+| Role | Responsibility |
+|:---|:---|
+| **Sicherheitsbeauftragter (ISO)** | Overall AI risk governance, policy ownership, compliance monitoring |
+| **Datenschutzbeauftragter (DPO)** | GDPR compliance, DPIA oversight, data subject rights for AI processing |
+| **AI Governance Committee** | Strategic risk decisions, deployment approval, regulatory alignment |
+| **IT Security Team** | Technical control implementation, monitoring, incident response |
+| **Development / MLOps Team** | Secure LLM integration, prompt hardening, model lifecycle management |
+| **Geschäftsleitung (Executive Management)** | Ultimate accountability under NIS2 §38 BSIG, risk acceptance sign-off |
 
----
+## 5. Governance Lifecycle
 
-## 4. Security Controls Catalogue
+```
+┌─────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+│  1. IDENTIFY │───▶│  2. ASSESS   │───▶│  3. MITIGATE │───▶│  4. MONITOR  │
+│  AI use case │    │  Risk level  │    │  Controls    │    │  Continuous  │
+└─────────────┘    └──────────────┘    └──────────────┘    └──────┬───────┘
+                                                                  │
+       ┌──────────────────────────────────────────────────────────┘
+       ▼
+┌──────────────┐    ┌──────────────┐
+│  5. RESPOND  │───▶│  6. IMPROVE  │──── (Cycle restarts)
+│  Incidents   │    │  Lessons     │
+└──────────────┘    └──────────────┘
+```
 
-### 4.1 Pre-Deployment Controls
+## 6. Key Takeaway
 
-| Control ID | Control | Applicable Risk Levels |
-|------------|---------|------------------------|
-| PRE-01 | Threat modelling using STRIDE or equivalent | Medium, High, Critical |
-| PRE-02 | Static analysis of system prompts and application code | Medium, High, Critical |
-| PRE-03 | Red-team / adversarial testing (jailbreak, prompt injection, data extraction) | High, Critical |
-| PRE-04 | Penetration test by independent team | Critical |
-| PRE-05 | Data Protection Impact Assessment (DPIA) | High (if personal data), Critical |
-| PRE-06 | Supply chain review of model provider and dependencies | High, Critical |
+> **Enterprises are underprepared.** The regulatory clock is ticking — EU AI Act high-risk obligations are enforceable from August 2, 2026, and Germany's NIS2 implementation (BSIG) is already in effect with a registration deadline of March 2026. Organizations deploying LLMs without a governance framework are accumulating legal, operational, and reputational debt.
 
-### 4.2 Operational Controls
-
-| Control ID | Control | Applicable Risk Levels |
-|------------|---------|------------------------|
-| OPS-01 | Input validation / jailbreak detection (e.g. `JailbreakDetector`) | Medium, High, Critical |
-| OPS-02 | System prompt hardening and confidentiality | Medium, High, Critical |
-| OPS-03 | Output content scanning | High, Critical |
-| OPS-04 | Least-privilege tool access | Medium, High, Critical |
-| OPS-05 | Human-in-the-loop for consequential actions | Critical |
-| OPS-06 | Rate limiting and abuse prevention | Medium, High, Critical |
-| OPS-07 | Conversation and audit logging | Medium, High, Critical |
-| OPS-08 | Data minimisation and retention controls | High, Critical |
-
-### 4.3 Monitoring and Response Controls
-
-| Control ID | Control | Applicable Risk Levels |
-|------------|---------|------------------------|
-| MON-01 | Real-time alerting on anomalous usage patterns | High, Critical |
-| MON-02 | Periodic review of logs for policy violations | Medium, High, Critical |
-| MON-03 | Incident response plan for LLM-specific scenarios | High, Critical |
-| MON-04 | Vulnerability disclosure process | All levels |
-| MON-05 | Scheduled red-team exercises (minimum annual) | High, Critical |
-
----
-
-## 5. Vulnerability Management
-
-### 5.1 Identification
-
-- Continuous automated scanning using tools such as `JailbreakDetector`.
-- Bug bounty or responsible disclosure programme for externally facing systems.
-- Threat intelligence feeds monitoring for novel jailbreak and prompt-injection techniques.
-
-### 5.2 Prioritisation
-
-Vulnerabilities are scored using a modified CVSS framework adapted for LLM systems:
-
-| Severity | CVSS-equivalent Score | Remediation SLA |
-|----------|-----------------------|-----------------|
-| Critical | 9.0 – 10.0 | 24 hours |
-| High | 7.0 – 8.9 | 7 days |
-| Medium | 4.0 – 6.9 | 30 days |
-| Low | 0.1 – 3.9 | 90 days |
-
-### 5.3 Remediation
-
-- Patch or mitigate the root cause where possible.
-- Where a technical fix is not immediately available, apply compensating
-  controls (e.g., tighten input filters, increase human oversight).
-- Document accepted residual risk with time-limited approval from AISO.
-
----
-
-## 6. Supplier and Model Provider Management
-
-- Conduct due diligence on LLM providers, including their security certifications
-  (SOC 2, ISO 27001) and AI safety practices.
-- Establish contractual requirements for:
-  - Data processing and sub-processing terms.
-  - Security incident notification (72-hour window aligned with GDPR).
-  - Model versioning transparency and change notification.
-- Evaluate the risk of provider lock-in and maintain contingency plans.
-
----
-
-## 7. Training and Awareness
-
-- All staff with access to LLM systems complete annual AI security awareness training.
-- Engineering teams complete specialised training on secure LLM development.
-- Security team maintains current knowledge of the LLM threat landscape through
-  regular research review and participation in industry working groups.
-
----
-
-## 8. Policy Review
-
-This governance framework is reviewed:
-
-- Annually as a minimum.
-- Following any significant security incident involving an LLM system.
-- When material changes occur in the regulatory environment.
-- When the organisation adopts materially new LLM capabilities or deployment
-  patterns.
-
-The AISO owns the review process and is responsible for maintaining version control
-and communicating changes to affected stakeholders.
-
----
-
-## 9. Related Documents
-
-- `docs/technical-analysis.md` – Technical analysis of LLM security risks
-- `docs/owasp-top-10-mapping.md` – OWASP LLM Top 10 control mapping
-- `docs/compliance-implications.md` – Regulatory compliance guidance
-- `examples/real-world-jailbreaks.md` – Documented real-world jailbreak examples
-- `detection/jailbreak_detector.py` – Automated jailbreak detection implementation
+This framework is designed to be actionable, auditable, and aligned with the expectations of German regulatory authorities (BSI, BfDI) and European standards bodies.
