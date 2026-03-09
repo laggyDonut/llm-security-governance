@@ -192,7 +192,7 @@ class JailbreakDetector:
             name="dan_persona",
             pattern=re.compile(
                 r"(you\s+are\s+now\s+|act\s+as\s+|pretend\s+(to\s+be|you\s+are)\s+|"
-                r"roleplay\s+as\s+|simulate\s+being\s+)"
+                r"roleplay\s+as\s+|simulate\s+being\s+(an?\s+)?)"
                 r"(DAN|Do\s+Anything\s+Now|an?\s+unrestricted|an?\s+unfiltered|"
                 r"an?\s+uncensored|evil|jailbroken|liberated)",
                 re.IGNORECASE
@@ -235,7 +235,7 @@ class JailbreakDetector:
             name="system_prompt_extraction",
             pattern=re.compile(
                 r"(reveal|show|display|print|output|repeat|echo|tell\s+me|"
-                r"what\s+(is|are))\s+(your\s+)?(system\s+prompt|initial\s+"
+                r"what\s+(is|are))\s+(me\s+)?(your\s+)?(system\s+prompt|initial\s+"
                 r"instructions|hidden\s+instructions|original\s+prompt|"
                 r"system\s+message|pre-prompt|meta-prompt|internal\s+instructions)",
                 re.IGNORECASE
@@ -265,6 +265,7 @@ class JailbreakDetector:
             name="encoding_instruction",
             pattern=re.compile(
                 r"(respond|answer|reply|output|encode|decode)\s+"
+                r"(your\s+(response|answer|reply|output)\s+)?"
                 r"(in|using|with|via)\s+"
                 r"(base64|rot13|hex(adecimal)?|binary|morse(\s+code)?|"
                 r"pig\s+latin|caesar\s+cipher|reverse(d)?(\s+text)?)",
