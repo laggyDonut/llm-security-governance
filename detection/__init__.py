@@ -1,10 +1,10 @@
 """
-detection package for LLM Security Governance.
+LLM Jailbreak Detection Module
 
-This package provides tools for detecting jailbreak attempts and other
-adversarial inputs targeting Large Language Models.
+Provides pattern-based detection of jailbreak attempts in LLM prompts.
+Designed for integration into enterprise AI security pipelines.
 """
 
-from .jailbreak_detector import JailbreakDetector, DetectionResult
+from .jailbreak_detector import JailbreakDetector, DetectionResult, RiskLevel, ThreatCategory
 
-__all__ = ["JailbreakDetector", "DetectionResult"]
+__all__ = ["JailbreakDetector", "DetectionResult", "RiskLevel", "ThreatCategory"]
