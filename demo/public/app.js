@@ -256,7 +256,10 @@ async function handleSubmit(e) {
                 { role: 'user', content: userMessage }
             ],
             temperature: 0.7,    // Moderate creativity
-            max_tokens: 1024    // Reasonable response length
+            // NOTE: 1024 tokens provides enough room for detailed AI responses
+            // including safety explanations in hardened modes, while preventing
+            // excessively long responses that could slow down the demo
+            max_tokens: 1024
         };
 
         console.log('Sending request with system prompt for:', posture.name);

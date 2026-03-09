@@ -22,6 +22,8 @@ const path = require('path');
 
 // Load environment variables from .env file
 // SECURITY: API keys should NEVER be hardcoded in source code
+// NOTE: The .env file is expected in the repository ROOT directory (one level up from demo/)
+// This allows sharing the same .env across multiple demos/tools in the repository
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 // Initialize Express application
