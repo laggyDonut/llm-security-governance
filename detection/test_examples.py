@@ -17,14 +17,16 @@ Author: Portfolio Project — LLM Security & AI Risk Governance
 License: MIT
 """
 
+import re
+
 import pytest
+
 from detection.jailbreak_detector import (
+    DetectionRule,
     JailbreakDetector,
     RiskLevel,
     ThreatCategory,
-    DetectionRule,
 )
-import re
 
 
 @pytest.fixture

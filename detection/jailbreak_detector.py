@@ -33,7 +33,7 @@ License: MIT
 import re
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Optional
+
 
 
 class RiskLevel(Enum):
@@ -121,7 +121,7 @@ class JailbreakDetector:
     THRESHOLD_HIGH = 0.60
     THRESHOLD_CRITICAL = 0.80
 
-    def __init__(self, custom_rules: Optional[list] = None):
+    def __init__(self, custom_rules: list | None = None):
         """
         Initialize the detector with the default rule library.
 
