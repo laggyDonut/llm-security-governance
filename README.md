@@ -40,6 +40,7 @@ This project bridges the gap between **offensive security research** (understand
 
 ```
 ├── README.md                          # This file — project overview
+├── requirements.txt                   # Python dependencies
 ├── detection/
 │   ├── jailbreak_detector.py          # Pattern-based jailbreak detection engine
 │   └── test_examples.py              # Unit tests with benign & adversarial prompts
@@ -65,7 +66,10 @@ This project bridges the gap between **offensive security research** (understand
 git clone https://github.com/<your-username>/llm-security-governance.git
 cd llm-security-governance
 
-# Run the detection tests (no external dependencies required)
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the detection tests
 python -m pytest detection/test_examples.py -v
 
 # Or run the detector directly
