@@ -28,6 +28,9 @@ Thumbs.db
 htmlcov/
 .coverage
 
+# Linting
+.ruff_cache/
+
 # Distribution
 *.tar.gz
 *.whl

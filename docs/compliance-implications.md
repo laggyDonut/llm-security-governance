@@ -41,11 +41,24 @@ A successful jailbreak that causes an LLM to reveal personal data from its train
 
 ### 3.1 Germany's NIS2 Implementation
 
-Germany transposed the NIS2 Directive into national law through amendments to the BSI Act (BSIG), effective **December 6, 2025**, with **no transition period**. Key points:
+Germany transposed the NIS2 Directive (EU 2022/2555) into national law through the **NIS2 Implementation and Cybersecurity Strengthening Act (NIS2UmsuCG)**, which amends the BSI Act (BSIG).
 
-- **Registration deadline with BSI:** March 6, 2026
+> **Important Note on Dates:** As of the creation of this document, the following dates represent the legislative timeline. Organizations should verify current status with official sources, as implementation details may be subject to change through the legislative process.
+
+**Key implementation milestones (as per legislative status):**
+
+- **Directive transposition deadline:** October 17, 2024 (EU requirement)
+- **Anticipated effective date:** December 2025 (pending final legislative approval — verify with [BSI official announcements](https://www.bsi.bund.de/EN/Themen/Regulierung/NIS-2/nis-2_node.html))
+- **Registration deadline with BSI:** Approximately 3 months after effective date
 - **Scope:** Essential and important entities in 18 sectors (energy, healthcare, finance, digital infrastructure, etc.)
 - **Management accountability:** Geschäftsleitung (executive management) is **personally liable** under §38 BSIG for cybersecurity risk management failures
+
+**Authoritative sources:**
+- [BSI — NIS2 Information Portal](https://www.bsi.bund.de/EN/Themen/Regulierung/NIS-2/nis-2_node.html)
+- [NIS2 Directive (EU 2022/2555)](https://eur-lex.europa.eu/eli/dir/2022/2555/oj)
+- [German Federal Ministry of the Interior — Cybersecurity](https://www.bmi.bund.de/EN/topics/it-digital-policy/it-cyber-security/it-cyber-security-node.html)
+
+> **Recommendation:** Subscribe to BSI announcements and monitor the Bundesgesetzblatt for the official publication of the NIS2UmsuCG to confirm exact dates and requirements for your organization.
 
 ### 3.2 NIS2 Obligations Relevant to LLM Deployments
 
