@@ -34,12 +34,6 @@
 const API_URL = '/api/chat';
 
 /**
- * Default model to use for chat completions.
- * OpenRouter supports many models - this one is fast and capable.
- */
-const DEFAULT_MODEL = 'openai/gpt-3.5-turbo';
-
-/**
  * SECURITY POSTURE DEFINITIONS
  * ============================
  * 
@@ -140,7 +134,7 @@ You may assist with legitimate questions within these boundaries.`,
 // ============================================================================
 
 // Get references to DOM elements (after DOMContentLoaded)
-let chatForm, userInput, chatMessages, securityPosture, submitBtn, postureIndicator;
+let chatForm, userInput, chatMessages, securityPosture, modelSelect, submitBtn, postureIndicator;
 
 // ============================================================================
 // INITIALIZATION
@@ -156,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
     userInput = document.getElementById('user-input');
     chatMessages = document.getElementById('chat-messages');
     securityPosture = document.getElementById('security-posture');
+    modelSelect = document.getElementById('model-select');
     submitBtn = document.getElementById('submit-btn');
     postureIndicator = document.getElementById('posture-indicator');
 
@@ -247,8 +242,9 @@ async function handleSubmit(e) {
          * The system prompt is sent with every request.
          * The server keeps the API key secret - we only send the payload.
          */
+        const selectedModel = modelSelect.value;
         const payload = {
-            model: DEFAULT_MODEL,
+            model: selectedModel,
             messages: [
                 // System prompt defines AI behavior (key to security!)
                 { role: 'system', content: posture.systemPrompt },
@@ -263,6 +259,7 @@ async function handleSubmit(e) {
         };
 
         console.log('Sending request with system prompt for:', posture.name);
+        console.log('Model:', selectedModel);
 
         // Send request to our proxy server
         const response = await fetch(API_URL, {
@@ -286,7 +283,7 @@ async function handleSubmit(e) {
 
         // Extract AI response
         if (data.choices && data.choices[0] && data.choices[0].message) {
-            addMessage('assistant', data.choices[0].message.content, posture);
+            addMessage('assistant', data.choices[0].message.content, posture, selectedModel);
         } else {
             throw new Error('Invalid response format from API');
         }
@@ -314,8 +311,9 @@ async function handleSubmit(e) {
  * @param {string} role - 'user', 'assistant', or 'error'
  * @param {string} content - The message content
  * @param {object} posture - Optional security posture for styling
+ * @param {string} model - Optional model name used for the response
  */
-function addMessage(role, content, posture = null) {
+function addMessage(role, content, posture = null, model = null) {
     const messageDiv = document.createElement('div');
     messageDiv.className = 'flex gap-4 message-appear';
 
@@ -334,6 +332,7 @@ function addMessage(role, content, posture = null) {
     } else if (role === 'assistant') {
         const colorClass = posture?.color === 'red' ? 'text-red-400' : 
                           posture?.color === 'green' ? 'text-green-400' : 'text-blue-400';
+        const modelLabel = model ? `<span class="text-xs font-normal text-slate-500 ml-2">(${escapeHtml(model)})</span>` : '';
         messageDiv.innerHTML = `
             <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -341,7 +340,7 @@ function addMessage(role, content, posture = null) {
                 </svg>
             </div>
             <div class="flex-1 bg-slate-700/50 rounded-2xl rounded-tl-none p-4">
-                <p class="text-sm font-semibold ${colorClass} mb-1">AI Response (${posture?.name || 'AI'})</p>
+                <p class="text-sm font-semibold ${colorClass} mb-1">AI Response (${escapeHtml(posture?.name || 'AI')})${modelLabel}</p>
                 <p class="text-slate-300 leading-relaxed whitespace-pre-wrap">${escapeHtml(content)}</p>
             </div>
         `;
